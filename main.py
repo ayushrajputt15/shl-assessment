@@ -81,7 +81,7 @@ class TFIDFRetriever:
                 dot_product += val * vec2[w]
                 
         norm1 = math.sqrt(sum(val**2 for val in vec1.values()))
-        norm2 = math.sqrt(sum(val**2 for val in vec1.values()))
+        norm2 = math.sqrt(sum(val**2 for val in vec2.values()))
         
         if norm1 == 0.0 or norm2 == 0.0:
             return 0.0
@@ -132,11 +132,6 @@ class ChatResponse(BaseModel):
     recommendations: List[RecommendationItem]
     end_of_conversation: bool
 
-# Normalization helper to match trace history ignoring spaces, dashes, encoding glitches, and punctuation
-def normalize_text(text: str) -> str:
-    text = text.lower().strip()
-    text = re.sub(r'[^a-z0-9]', '', text)
-    return text
 
 # Candidate filter logic (retrieves a subset of products to keep prompt small & highly precise)
 def get_catalog_candidates(messages_text: str, catalog: list) -> list:
@@ -319,9 +314,7 @@ def call_llm(system_instruction: str, history: List[dict]) -> dict:
         if not groq_key:
             raise HTTPException(status_code=500, detail="GROQ_API_KEY not configured or is a placeholder")
             
-        # NOTE: Groq's llama-3.3-70b-versatile is scheduled for deprecation on 08/16/26.
-        # Migrate to Groq's recommended replacement (e.g. qwen/qwen3.6-27b or similar) after this date.
-        model = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+        model = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
         url = "https://api.groq.com/openai/v1/chat/completions"
         headers = {
             "Content-Type": "application/json",

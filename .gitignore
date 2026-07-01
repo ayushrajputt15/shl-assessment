@@ -1,4 +1,4 @@
-# Environments
+# Environment variables (never upload API keys)
 .env
 .env.local
 .env.*.local
@@ -9,34 +9,21 @@ __pycache__/
 *.pyo
 *.pyd
 .pytest_cache/
-.env
 
-# Logs and databases
+# Logs
 *.log
 uvicorn.log
+
+# Local-only data files
 trace_database.json
-test_candidate_filter.py
-check_glitches.py
-check_comp_knowledge.py
-search_svar.py
-search_365.py
-search_numerical.py
-verify_key.py
-verify_key_direct.py
-debug_lookup.py
-check_job_solutions.py
-check_startups.py
-extract_links.py
-download_catalog.py
-inspect_catalog.py
-analyze_sample_conversations.py
-extract_test_types.py
-compare_keys.py
-find_global_skills.py
-check_dev_360.py
-list_unique_keys.py
-check_assessment_exercises.py
-find_adce.py
-summarize_conversations.py
-# Scratch files
+
+# Scratch / debug scripts
 scratch/
+
+# Assignment PDF & sample conversations (not needed on server)
+SHL_AI_Intern_Assignment.pdf
+GenAI_SampleConversations/
+
+# Local testing & CLI tools (not needed on server)
+run_tests.py
+interactive_chat.py
